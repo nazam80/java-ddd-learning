@@ -7,3 +7,5 @@ gradle-app.setting
 
 /var/log/*
 !/var/log/.gitkeep
+
+.idea
