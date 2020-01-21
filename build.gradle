@@ -15,8 +15,8 @@ allprojects {
     implementation 'com.vlkan.log4j2:log4j2-logstash-layout:0.19'
 
     // Test
-    testCompile 'org.junit.jupiter:junit-jupiter-api:5.5.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.1'
+    testCompile 'org.junit.jupiter:junit-jupiter-api:5.3.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.2'
   }
 
   test {
@@ -84,10 +84,10 @@ apply plugin: 'io.spring.dependency-management'
 
 bootJar {
   baseName = 'java-ddd-skeleton'
-  version =  '0.0.1'
+  version = '0.0.1'
 }
 
-mainClassName = 'tv.codely.Starter'
+mainClassName = 'tv.codely.apps.Starter'
 
 dependencies {
   compile("org.springframework.boot:spring-boot-starter-web")
