@@ -1,15 +1,13 @@
-package tv.codely.mooc.courses.domain;
+package tv.codely.mooc.courses.application.create;
 
 import java.util.Objects;
 
-public class Course {
+public class CreateCourseRequest {
     private final String id;
     private final String name;
     private final String duration;
 
-
-
-    public Course(String id, String name, String duration) {
+    public CreateCourseRequest(String id, String name, String duration) {
         this.id = id;
         this.name = name;
         this.duration = duration;
@@ -31,10 +29,10 @@ public class Course {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Course course = (Course) o;
-        return Objects.equals(id, course.id) &&
-            Objects.equals(name, course.name) &&
-            Objects.equals(duration, course.duration);
+        CreateCourseRequest that = (CreateCourseRequest) o;
+        return id.equals(that.id) &&
+            name.equals(that.name) &&
+            duration.equals(that.duration);
     }
 
     @Override

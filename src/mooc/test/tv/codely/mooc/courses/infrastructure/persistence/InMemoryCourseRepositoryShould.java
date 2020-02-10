@@ -6,8 +6,6 @@ import tv.codely.mooc.courses.domain.Course;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class InMemoryCourseRepositoryShould {
 
     @Test
@@ -26,7 +24,7 @@ class InMemoryCourseRepositoryShould {
 
         repository.save( course);
 
-        Assert.assertEquals(Optional.of(course), repository.search(course.getId()));
+        Assert.assertEquals(Optional.of(course), repository.search(course.id()));
     }
 
     @Test
