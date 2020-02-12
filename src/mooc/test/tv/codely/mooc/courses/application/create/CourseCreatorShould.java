@@ -2,10 +2,9 @@ package tv.codely.mooc.courses.application.create;
 
 import org.junit.jupiter.api.Test;
 import tv.codely.mooc.courses.domain.Course;
-import tv.codely.mooc.courses.domain.CourseDuration;
-import tv.codely.mooc.courses.domain.CourseId;
-import tv.codely.mooc.courses.domain.CourseName;
+import tv.codely.mooc.courses.domain.CourseMother;
 import tv.codely.mooc.courses.domain.CourseRepository;
+import tv.codely.mooc.courses.domain.CreateCourseRequestMother;
 
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
@@ -18,13 +17,9 @@ final class CourseCreatorShould {
         CourseRepository courseRepository = mock(CourseRepository.class);
         CourseCreator creator = new CourseCreator(courseRepository);
 
-        CreateCourseRequest request = new CreateCourseRequest("decf33ca-81a7-419f-a07a-74f214e928e5", "my-name",
-            "my-duration");
+        CreateCourseRequest request = CreateCourseRequestMother.random();
 
-        CourseId id = new CourseId(request.id());
-        CourseName name = new CourseName(request.name());
-        CourseDuration duration = new CourseDuration(request.duration());
-        Course course = new Course(id, name, duration);
+        Course course = CourseMother.fromRequest(request);
 
         creator.create(request);
 
