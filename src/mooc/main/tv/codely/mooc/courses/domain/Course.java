@@ -4,12 +4,11 @@ import java.util.Objects;
 
 public class Course {
     private final CourseId id;
-    private final String name;
-    private final String duration;
+    private final CourseName name;
+    private final CourseDuration duration;
 
 
-
-    public Course(CourseId id, String name, String duration) {
+    public Course(CourseId id, CourseName name, CourseDuration duration) {
         this.id = id;
         this.name = name;
         this.duration = duration;
@@ -19,18 +18,22 @@ public class Course {
         return id;
     }
 
-    public String name() {
+    public CourseName name() {
         return name;
     }
 
-    public String duration() {
+    public CourseDuration duration() {
         return duration;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Course course = (Course) o;
         return id.equals(course.id) &&
             name.equals(course.name) &&
