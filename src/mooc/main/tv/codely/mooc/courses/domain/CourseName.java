@@ -8,4 +8,8 @@ public class CourseName extends StringValueObject {
     public CourseName(String value) {
         super(value);
     }
+
+    public CourseName() {
+        super("");
+    }
 }
