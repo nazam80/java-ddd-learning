@@ -10,26 +10,27 @@ import tv.codely.mooc.courses.domain.CourseMother;
 
 import java.util.Optional;
 
-public class InMemoryCourseRepositoryShould extends CourseModuleInfrastructureTestCase {
+
+class MySqlCourseRepositoryShould  extends CourseModuleInfrastructureTestCase {
 
     @Test
     void save_a_valid_course() {
         Course course = CourseMother.random();
-        inMemoryCourseRepository.save(course);
+        mySqlCourseRepository.save(course);
     }
 
 
     @Test
     void search_an_existing_course() {
         Course course = CourseMother.random();
-        inMemoryCourseRepository.save(course);
+        mySqlCourseRepository.save(course);
 
-        Assert.assertEquals(Optional.of(course), inMemoryCourseRepository.search(course.id()));
+        Assert.assertEquals(Optional.of(course), mySqlCourseRepository.search(course.id()));
     }
 
     @Test
     void search_not_existing_course() {
         CourseId id = CourseIdMother.random();
-        Assert.assertFalse(inMemoryCourseRepository.search(id).isPresent());
+        Assert.assertFalse(mySqlCourseRepository.search(id).isPresent());
     }
 }
