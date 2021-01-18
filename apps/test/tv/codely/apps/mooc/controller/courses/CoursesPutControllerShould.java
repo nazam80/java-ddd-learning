@@ -1,8 +1,12 @@
 package tv.codely.apps.mooc.controller.courses;
 
 import tv.codely.apps.mooc.controller.RequestTestCase;
+
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.Test;
 
+@Transactional
 final class CoursesPutControllerShould extends RequestTestCase {
 
     @Test

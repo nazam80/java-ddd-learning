@@ -1,5 +1,15 @@
 package tv.codely.mooc.courses.infrastructure.persistence;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Properties;
+import java.util.stream.Collectors;
+
+import javax.sql.DataSource;
+
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import org.hibernate.cfg.AvailableSettings;
 import org.springframework.context.annotation.Bean;
@@ -10,13 +20,6 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import javax.sql.DataSource;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.stream.Collectors;
 
 @Configuration
 @EnableTransactionManagement
@@ -37,36 +40,44 @@ public class MoocHibernateConfiguration {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(createDataSource());
         sessionFactory.setHibernateProperties(createHibernateProperties());
-        List<Resource> mappingFiles = searchMappingFiles();
+        List<Resource> mappingFiles = searchMappingFiles("mooc");
 
         sessionFactory.setMappingLocations(mappingFiles.toArray(new Resource[mappingFiles.size()]));
 
         return sessionFactory;
     }
 
-    private List<Resource> searchMappingFiles() {
-        String[] modules = subdirectoriesFor(PROJECT_BASE_PATH);
+    private List<Resource> searchMappingFiles(String contextName) {
+        List<String> modules   = subdirectoriesFor(contextName);    
         List<String> goodPaths = new ArrayList<>();
 
         for (String module : modules) {
-            String[] files = mappingFilesIn(PROJECT_BASE_PATH + module + HIBERNATE_MODULE_PATH);
+            String[] files = mappingFilesIn(module + HIBERNATE_MODULE_PATH);            
 
             for (String file : files) {
-                goodPaths.add(PROJECT_BASE_PATH + module + HIBERNATE_MODULE_PATH + file);
+                goodPaths.add(module + HIBERNATE_MODULE_PATH + file);
             }
         }
 
         return goodPaths.stream().map(FileSystemResource::new).collect(Collectors.toList());
     }
 
-    private String[] subdirectoriesFor(String path) {
+    private List<String> subdirectoriesFor(String contextName) {
+        String path = "./src/" + contextName + "/main/tv/codely/" + contextName + "/";    
         String[] files = new File(path).list((current, name) -> new File(current, name).isDirectory());
 
         if (null == files) {
-            return new String[0];
+        	path = "./main/tv/codely/" + contextName + "/";
+            files = new File(path).list((current, name) -> new File(current, name).isDirectory());
         }
 
-        return files;
+        if (null == files) {
+            return Collections.emptyList();
+        }
+
+        String finalPath = path;
+
+        return Arrays.stream(files).map(file -> finalPath + file).collect(Collectors.toList());
     }
 
     private String[] mappingFilesIn(String path) {

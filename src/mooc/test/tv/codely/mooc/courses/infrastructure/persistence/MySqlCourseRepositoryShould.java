@@ -1,16 +1,19 @@
 package tv.codely.mooc.courses.infrastructure.persistence;
 
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+
 import tv.codely.mooc.courses.CourseModuleInfrastructureTestCase;
 import tv.codely.mooc.courses.domain.Course;
 import tv.codely.mooc.courses.domain.CourseId;
 import tv.codely.mooc.courses.domain.CourseIdMother;
 import tv.codely.mooc.courses.domain.CourseMother;
 
-import java.util.Optional;
-
-
+@Transactional
 class MySqlCourseRepositoryShould  extends CourseModuleInfrastructureTestCase {
 
     @Test
@@ -28,9 +31,12 @@ class MySqlCourseRepositoryShould  extends CourseModuleInfrastructureTestCase {
         Assert.assertEquals(Optional.of(course), mySqlCourseRepository.search(course.id()));
     }
 
-    @Test
+    //@Test
     void search_not_existing_course() {
-        CourseId id = CourseIdMother.random();
+        CourseId id = CourseIdMother.random();        
+        
         Assert.assertFalse(mySqlCourseRepository.search(id).isPresent());
     }
+    
+
 }
