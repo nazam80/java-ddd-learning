@@ -1,13 +1,14 @@
 package tv.codely.apps;
 
+import java.util.Arrays;
+import java.util.HashMap;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.context.ConfigurableApplicationContext;
-import tv.codely.apps.mooc.MoocApplication;
-import tv.codely.shared.infrastructure.cli.ConsoleCommand;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import tv.codely.apps.mooc.backend.MoocBackendApplication;
+import tv.codely.shared.infrastructure.cli.ConsoleCommand;
 
 public class Starter {
 
@@ -69,7 +70,7 @@ public class Starter {
     private static HashMap<String, Class<?>> applications() {
         HashMap<String, Class<?>> applications = new HashMap<>();
 
-        applications.put(MOOC_APPLICATION, MoocApplication.class);
+        applications.put(MOOC_APPLICATION, MoocBackendApplication.class);
 
         return applications;
     }
