@@ -9,3 +9,7 @@ gradle-app.setting
 !/var/log/.gitkeep
 
 .idea
+.settings
+bin
+.classpath
+*.project
