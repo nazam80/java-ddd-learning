@@ -1,30 +1,34 @@
 package tv.codely.mooc.courses.infrastructure.persistence;
 
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
 import org.hibernate.SessionFactory;
+
 import tv.codely.mooc.courses.domain.Course;
 import tv.codely.mooc.courses.domain.CourseId;
 import tv.codely.mooc.courses.domain.CourseRepository;
 import tv.codely.shared.domain.Service;
-
-import javax.transaction.Transactional;
-import java.util.Optional;
+import tv.codely.shared.infrastructure.hibernate.HibernateRepository;
 
 @Service
 @Transactional
-public class MySqlCourseRepository implements CourseRepository {
-    private SessionFactory sessionFactory;
+public class MySqlCourseRepository  extends HibernateRepository<Course> implements CourseRepository {
+    
+	public MySqlCourseRepository(SessionFactory sessionFactory) {
+		super(sessionFactory, Course.class);	
+	}
 
-    public MySqlCourseRepository(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+	
 
     @Override
     public void save(Course course) {
-        sessionFactory.getCurrentSession().save(course);
+    	persist(course);        
     }
 
     @Override
     public Optional<Course> search(CourseId id) {
-        return Optional.ofNullable(sessionFactory.getCurrentSession().byId(Course.class).getReference(id));
+    	return byId(id);        
     }
 }
